@@ -65,17 +65,29 @@ class mywindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		all_pos = self.textBrowser.textCursor().anchor()
 		pos = self.textBrowser.textCursor().positionInBlock()
 		col = self.textBrowser.textCursor().columnNumber()
-		return f"Line {self.get_lines(self.textBrowser.toPlainText(),all_pos)+1}, Column {pos+1}"
+		return f"Line {self.get_lines(self.textBrowser.toPlainText(),all_pos)}, Column {pos+1}"
 	def get_lines(self,text, pos):
 		original = copy(text)
 		cur_pos = len(original) - pos
 		text = text.split('\n')
+		print(text)
 		i = 0
+		print("### Start ###")
+		print(pos)
 		for x in text:
+			if x == '':
+				i+=1
+				continue
 			if pos - len(x) <=0:
+				i+=1
 				break
-			pos -=len(x)
+			pos -=(len(x)+1)
+			print(pos, len(x)+1)
 			i += 1
+		print(pos)
+		print("### End ###")
+		if text!=[''] and i==0:
+			i+=1
 		return i
 	def openFile(self):
 		dlg = QtWidgets.QFileDialog()
